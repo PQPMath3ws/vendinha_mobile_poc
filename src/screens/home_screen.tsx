@@ -2,17 +2,6 @@ import React, {ReactElement} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const viewShadow = {
-  shadowColor: "#000000",
-  shadowOffset: {
-    width: 10,
-    height: -10,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 16.00,
-  elevation: 24,
-};
-
 export default function HomeScreen(): ReactElement {
   return (
     <SafeAreaView className="w-full h-full bg-[#FAFAFA] pb-7">
