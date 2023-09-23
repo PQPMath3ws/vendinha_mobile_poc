@@ -14,6 +14,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-vendinha_mobile_poc-vendinha_mobile_pocTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-vendinha_mobile_poc-vendinha_mobile_pocTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8D793090C9284894BF5B27CF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */; };
+		82E9514389E8472E97B57088 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */; };
+		B08CFD41E1C7463EABC763D8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD6FD7B3FA44CE0BB6F287B /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = vendinha_mobile_poc/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-vendinha_mobile_poc-vendinha_mobile_pocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vendinha_mobile_poc-vendinha_mobile_pocTests.release.xcconfig"; path = "Target Support Files/Pods-vendinha_mobile_poc-vendinha_mobile_pocTests/Pods-vendinha_mobile_poc-vendinha_mobile_pocTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BBD6FD7B3FA44CE0BB6F287B /* icon.png */ = {isa = PBXFileReference; name = "icon.png"; path = "../assets/images/icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				0B4B210B0A6348C0BAB39969 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +154,17 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		0B4B210B0A6348C0BAB39969 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */,
+				9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */,
+				BBD6FD7B3FA44CE0BB6F287B /* icon.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +262,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				8D793090C9284894BF5B27CF /* OpenSans-Bold.ttf in Resources */,
+				82E9514389E8472E97B57088 /* OpenSans-Regular.ttf in Resources */,
+				B08CFD41E1C7463EABC763D8 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
