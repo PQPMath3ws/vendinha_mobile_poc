@@ -16,7 +16,7 @@ export default function SplashScreen({
         index: 0,
         routes: [
           {
-            name: 'HomeScreen',
+            name: 'AppTabsScreen',
           },
         ],
       });
