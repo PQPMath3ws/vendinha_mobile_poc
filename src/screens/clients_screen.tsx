@@ -19,6 +19,26 @@ export default function ClientsScreen({
   navigation: NativeStackNavigationProp<ParamListBase, 'ClientsScreen'>;
 }): ReactElement {
   const [clientNameToSearch, setClientNameToSearch] = useState('');
+  const [clientsList, setClientsList] = useState([
+    {
+      name: 'Um cliente aleatório 1',
+      cpf: '12345678901',
+      email: 'email@temporario.com',
+      valorDividas: 12.0,
+    },
+    {
+      name: 'Um cliente aleatório 2',
+      cpf: '10987654321',
+      email: 'email@temporario.com.br',
+      valorDividas: 300.0,
+    },
+    {
+      name: 'Um cliente aleatório 3',
+      cpf: '00000000000',
+      email: 'email@temp.com',
+      valorDividas: 300.0,
+    },
+  ]);
 
   function navigateToAddClientScreen() {
     navigation.navigate('AddClientScreen');
@@ -50,135 +70,53 @@ export default function ClientsScreen({
             color="#A4A6AC"
           />
         </View>
-        <View className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
-          <Text
-            className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
-            style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-            Um nome aleatório aqui
-          </Text>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
+        {clientsList.map(client => (
+          <View
+            key={client.cpf}
+            className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
             <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              CPF:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              12345678901
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              E-mail:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              email@temporario.com
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row justify-between pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#AFDA51]"
+              className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
               style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              Valor total:
+              {client.name}
             </Text>
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              R$ 0.0
-            </Text>
+            <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
+              <Text
+                className="font-['OpenSans-Bold'] text-[#404040]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
+                CPF:
+              </Text>
+              <Text
+                className="font-['OpenSans-Regular'] text-[#404040]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
+                {client.cpf}
+              </Text>
+            </View>
+            <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
+              <Text
+                className="font-['OpenSans-Bold'] text-[#404040]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
+                E-mail:
+              </Text>
+              <Text
+                className="font-['OpenSans-Regular'] text-[#404040]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
+                {client.email}
+              </Text>
+            </View>
+            <View className="mt-3 flex w-[95%] flex-row justify-between pl-4">
+              <Text
+                className="font-['OpenSans-Bold'] text-[#AFDA51]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
+                Valor total:
+              </Text>
+              <Text
+                className="font-['OpenSans-Bold'] text-[#404040]"
+                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
+                R$ {client.valorDividas.toFixed(2).replace('.', ',')}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
-          <Text
-            className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
-            style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-            Um nome aleatório aqui
-          </Text>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              CPF:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              12345678901
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              E-mail:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              email@temporario.com
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row justify-between pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#AFDA51]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              Valor total:
-            </Text>
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              R$ 0.0
-            </Text>
-          </View>
-        </View>
-        <View className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
-          <Text
-            className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
-            style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-            Um nome aleatório aqui
-          </Text>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              CPF:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              12345678901
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              E-mail:
-            </Text>
-            <Text
-              className="font-['OpenSans-Regular'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-              email@temporario.com
-            </Text>
-          </View>
-          <View className="mt-3 flex w-[95%] flex-row justify-between pl-4">
-            <Text
-              className="font-['OpenSans-Bold'] text-[#AFDA51]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              Valor total:
-            </Text>
-            <Text
-              className="font-['OpenSans-Bold'] text-[#404040]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              R$ 0.0
-            </Text>
-          </View>
-        </View>
+        ))}
       </ScrollView>
       <TouchableOpacity
         className="absolute bottom-7 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
