@@ -44,6 +44,13 @@ export default function ClientsScreen({
     navigation.navigate('AddClientScreen');
   }
 
+  const clientsToShow = () =>
+    clientsList.filter(client =>
+      clientNameToSearch.length > 0 && clientNameToSearch !== ''
+        ? client.name.toLowerCase().includes(clientNameToSearch.toLowerCase())
+        : true,
+    );
+
   return (
     <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-7">
       <ScrollView
@@ -70,7 +77,7 @@ export default function ClientsScreen({
             color="#A4A6AC"
           />
         </View>
-        {clientsList.map(client => (
+        {clientsToShow().map(client => (
           <View
             key={client.cpf}
             className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
