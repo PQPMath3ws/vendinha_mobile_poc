@@ -35,7 +35,10 @@ export default function Tabs(): ReactElement {
         component={HomeScreen}
         options={{
           ...screenOptions,
-          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarItemStyle: {
+            alignItems: "flex-end",
+            paddingRight: 70,
+          },
           tabBarIcon: ({color}) => (
             <Icon name="home-outline" color={color} size={34} />
           ),
@@ -46,7 +49,10 @@ export default function Tabs(): ReactElement {
         component={ClientsScreen}
         options={{
           ...screenOptions,
-          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarItemStyle: {
+            alignItems: "flex-start",
+            paddingLeft: 70,
+          },
           tabBarIcon: ({color}) => (
             <Icon name="person-outline" color={color} size={34} />
           ),
