@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
-  extends: ['@react-native', 'plugin:tailwind/recommended'],
+  extends: ['@react-native', 'plugin:tailwindcss/recommended'],
   overrides: [
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
@@ -9,6 +9,6 @@ module.exports = {
     },
   ],
   rules: {
-    "prettier/prettier": "error",
+    'prettier/prettier': 'error',
   },
 };
