@@ -17,6 +17,7 @@
 		8D793090C9284894BF5B27CF /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */; };
 		82E9514389E8472E97B57088 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */; };
 		B08CFD41E1C7463EABC763D8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD6FD7B3FA44CE0BB6F287B /* icon.png */; };
+		4053E8ABBB784145BFBA7A22 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6A1155CBE3489B8C3A1776 /* OpenSans-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BBD6FD7B3FA44CE0BB6F287B /* icon.png */ = {isa = PBXFileReference; name = "icon.png"; path = "../assets/images/icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FE6A1155CBE3489B8C3A1776 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "OpenSans-SemiBold.ttf"; path = "../assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				5D189371138147DEA1A9A758 /* OpenSans-Bold.ttf */,
 				9BE8316536264F33BD49CC21 /* OpenSans-Regular.ttf */,
 				BBD6FD7B3FA44CE0BB6F287B /* icon.png */,
+				FE6A1155CBE3489B8C3A1776 /* OpenSans-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				8D793090C9284894BF5B27CF /* OpenSans-Bold.ttf in Resources */,
 				82E9514389E8472E97B57088 /* OpenSans-Regular.ttf in Resources */,
 				B08CFD41E1C7463EABC763D8 /* icon.png in Resources */,
+				4053E8ABBB784145BFBA7A22 /* OpenSans-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

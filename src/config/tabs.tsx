@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {ReactElement} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import AddClientScreen from '../screens/add_client_screen';
 import ClientsScreen from '../screens/clients_screen';
 import HomeScreen from '../screens/home_screen';
 
@@ -22,8 +23,8 @@ const screenOptions = {
     height: 60,
   },
   tabBarIconStyle: {
-    width: 38,
-    height: 38,
+    width: 54,
+    height: 54,
   },
 };
 
@@ -36,7 +37,7 @@ export default function Tabs(): ReactElement {
         options={{
           ...screenOptions,
           tabBarItemStyle: {
-            alignItems: "flex-end",
+            alignItems: 'flex-end',
             paddingRight: 70,
           },
           tabBarIcon: ({color}) => (
@@ -50,12 +51,20 @@ export default function Tabs(): ReactElement {
         options={{
           ...screenOptions,
           tabBarItemStyle: {
-            alignItems: "flex-start",
+            alignItems: 'flex-start',
             paddingLeft: 70,
           },
           tabBarIcon: ({color}) => (
             <Icon name="person-outline" color={color} size={34} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="AddClientScreen"
+        component={AddClientScreen}
+        options={{
+          ...screenOptions,
+          tabBarButton: () => null,
         }}
       />
     </Tab.Navigator>
