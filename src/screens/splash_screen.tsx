@@ -28,8 +28,8 @@ export default function SplashScreen({
   }, []);
 
   return (
-    <View className="w-full h-full bg-[#F3F3F4] items-center justify-center">
-      <Image className="w-[60vw] h-[60vw]" source={icon}></Image>
+    <View className="h-full w-full items-center justify-center bg-[#F3F3F4]">
+      <Image className="h-[60vw] w-[60vw]" source={icon} />
     </View>
   );
 }
