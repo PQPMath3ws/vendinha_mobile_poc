@@ -10,7 +10,7 @@ type ApiClientsType = {
   email: string;
   cpf: string;
   dataNascimento: string;
-  valorDividas?: number;
+  dividas?: Object;
 };
 
 type ApiDebtsType = {
@@ -19,7 +19,7 @@ type ApiDebtsType = {
   ultimaAlteracao: string;
   criadoEm: string;
   valor: number;
-  dataPagamento: string;
+  dataPagamento?: string;
   descricao: string;
 };
 

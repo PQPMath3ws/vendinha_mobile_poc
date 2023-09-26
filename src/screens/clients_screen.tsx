@@ -28,16 +28,10 @@ export default function ClientsScreen({
 
   function fillClientsList() {
     const clients: any = route.params.clients.map(client => {
-      client.valorDividas = route.params.debts
-        .filter(
-          debt =>
-            debt.cliente.cpf === client.cpf &&
-            debt.cliente.nome === client.nome,
-        )
-        .reduce(
-          (initialValue, currentValue) => initialValue + currentValue.valor,
-          0,
-        );
+      client.dividas = route.params.debts.filter(
+        debt =>
+          debt.cliente.cpf === client.cpf && debt.cliente.nome === client.nome,
+      );
       return client;
     });
     setClientsList(clients);
@@ -59,9 +53,23 @@ export default function ClientsScreen({
           : true,
       )
       .sort((a, b) =>
-        a.valorDividas > b.valorDividas
+        a.dividas.reduce(
+          (initialValue, currentValue) => initialValue + currentValue.valor,
+          0,
+        ) >
+        b.dividas.reduce(
+          (initialValue, currentValue) => initialValue + currentValue.valor,
+          0,
+        )
           ? -1
-          : a.valorDividas < b.valorDividas
+          : a.dividas.reduce(
+              (initialValue, currentValue) => initialValue + currentValue.valor,
+              0,
+            ) <
+            b.dividas.reduce(
+              (initialValue, currentValue) => initialValue + currentValue.valor,
+              0,
+            )
           ? 1
           : 0,
       );
@@ -93,10 +101,7 @@ export default function ClientsScreen({
           />
         </View>
         {clientsToShow().map(client => (
-          <ClientCard
-            key={client.nome + '_' + client.cpf + '_' + client.criadoEm}
-            client={client}
-          />
+          <ClientCard key={client.id} client={client} navigation={navigation} />
         ))}
       </ScrollView>
       <TouchableOpacity

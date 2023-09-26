@@ -13,7 +13,7 @@ export default function ResumeCard({
   totalValue: string;
 }): ReactElement {
   return (
-    <TouchableOpacity className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
+    <View className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
       <Text
         className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
         style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
@@ -43,6 +43,6 @@ export default function ResumeCard({
           R$ {totalValue}
         </Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }

@@ -4,6 +4,7 @@ import React, {ReactElement} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import AddClientScreen from '../screens/add_client_screen';
+import ClientScreen from '../screens/client_screen';
 import ClientsScreen from '../screens/clients_screen';
 import HomeScreen from '../screens/home_screen';
 import {SomeScreensProps} from '../../App';
@@ -70,6 +71,14 @@ export default function Tabs({
           tabBarIcon: ({color}) => (
             <Icon name="person-outline" color={color} size={34} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="ClientScreen"
+        component={ClientScreen}
+        options={{
+          ...screenOptions,
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen

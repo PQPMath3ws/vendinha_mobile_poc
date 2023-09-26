@@ -49,13 +49,13 @@ export default function HomeScreen({
           qtde={route.params.debts
             .filter(
               debt =>
-                debt.dataPagamento !== null || debt.dataPagamento !== undefined,
+                debt.dataPagamento !== null && debt.dataPagamento !== undefined,
             )
             .length.toString()}
           totalValue={route.params.debts
             .filter(
               debt =>
-                debt.dataPagamento !== null || debt.dataPagamento !== undefined,
+                debt.dataPagamento !== null && debt.dataPagamento !== undefined,
             )
             .reduce(
               (initialValue, currentValue) => initialValue + currentValue.valor,

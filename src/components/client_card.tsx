@@ -1,13 +1,26 @@
+import {ParamListBase} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {ReactElement} from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 
 import {SizeConfig} from '../config/size_config';
 
-export default function ClientCard({client}: {client: any}): ReactElement {
+export default function ClientCard({
+  client,
+  navigation,
+}: {
+  client: any;
+  navigation: NativeStackNavigationProp<ParamListBase, 'ClientsScreen'>;
+}): ReactElement {
+  function navigateToClientDetailsPage() {
+    navigation.navigate('ClientScreen', {client: client});
+  }
+
   return (
-    <View
+    <TouchableOpacity
       key={client.cpf}
-      className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
+      className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4"
+      onPress={navigateToClientDetailsPage}>
       <Text
         className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
         style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
@@ -46,9 +59,16 @@ export default function ClientCard({client}: {client: any}): ReactElement {
         <Text
           className="font-['OpenSans-Bold'] text-[#404040]"
           style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-          R$ {client.valorDividas.toFixed(2).replace('.', ',')}
+          R${' '}
+          {client.dividas
+            .reduce(
+              (initialValue, currentValue) => initialValue + currentValue.valor,
+              0,
+            )
+            .toFixed(2)
+            .replace('.', ',')}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
