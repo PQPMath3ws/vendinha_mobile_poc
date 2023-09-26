@@ -34,6 +34,9 @@ export type SomeScreensProps = {
   HomeScreen: {
     debts: Array<ApiDebtsType>;
   };
+  ClientScreen: {
+    client: ApiClientsType;
+  };
   ClientsScreen: {
     clients: Array<ApiClientsType>;
     debts: Array<ApiDebtsType>;
@@ -45,6 +48,9 @@ export type SomeScreensProps = {
     name?: string;
   };
   CreateDebtScreen: undefined;
+  AllClientDebtsScreen: {
+    debts: Array<ApiDebtsType>;
+  };
 };
 
 export default function App(): ReactElement {

@@ -3,6 +3,7 @@ import {RouteProp} from '@react-navigation/native';
 import React, {ReactElement} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import AllClientDebtsScreen from '../screens/all_client_debt_screen';
 import AddClientScreen from '../screens/add_client_screen';
 import ClientScreen from '../screens/client_screen';
 import ClientsScreen from '../screens/clients_screen';
@@ -76,6 +77,14 @@ export default function Tabs({
       <Tab.Screen
         name="ClientScreen"
         component={ClientScreen}
+        options={{
+          ...screenOptions,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        name="AllClientDebtsScreen"
+        component={AllClientDebtsScreen}
         options={{
           ...screenOptions,
           tabBarButton: () => null,

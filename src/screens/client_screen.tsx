@@ -1,4 +1,4 @@
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {ReactElement} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import DebtCard from '../components/debt_card';
 
+import {SomeScreensProps} from '../../App';
+
 import {SizeConfig} from '../config/size_config';
 
 export default function ClientScreen({
@@ -14,6 +16,7 @@ export default function ClientScreen({
   route,
 }: {
   navigation: NativeStackNavigationProp<ParamListBase, 'ClientScreen'>;
+  route: RouteProp<SomeScreensProps, 'ClientScreen'>;
 }): ReactElement {
   function navigateBackToClientsScreen(): void {
     navigation.reset({
@@ -35,16 +38,16 @@ export default function ClientScreen({
   function navigateToCreateDebtScreen() {
     navigation.navigate('CreateDebtScreen', {
       cpf: route.params.client.cpf,
-      dateOfBirth: route.params.client.dateOfBirth
-        ? route.params.client.dateOfBirth.getTime()
+      dateOfBirth: route.params.client.dataNascimento
+        ? new Date(route.params.client.dataNascimento).getTime()
         : new Date().getTime(),
       email: route.params.client.email,
-      name: route.params.client.name,
+      name: route.params.client.nome,
     });
   }
 
   return (
-    <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-7">
+    <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-6">
       <ScrollView
         className="mt-6"
         contentContainerStyle={{flexGrow: 1, alignItems: 'center'}}>
@@ -141,9 +144,11 @@ export default function ClientScreen({
           ) : (
             route.params.client.dividas
               .sort((a, b) =>
-                a.dataPagamento !== null || a.dataPagamento !== undefined
+                (a.dataPagamento === null || a.dataPagamento === undefined) &&
+                b.dataPagamento !== null &&
+                b.dataPagamento !== undefined
                   ? -1
-                  : a.dataPagamento === null && a.dataPagamento === undefined
+                  : a.dataPagamento !== null && a.dataPagamento !== undefined
                   ? 1
                   : 0,
               )
