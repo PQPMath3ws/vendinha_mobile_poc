@@ -1,6 +1,6 @@
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {
   ScrollView,
   Text,
@@ -11,45 +11,60 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import {SomeScreensProps} from '../../App';
+
 import {SizeConfig} from '../config/size_config';
+import ClientCard from '../components/client_card';
 
 export default function ClientsScreen({
   navigation,
+  route,
 }: {
   navigation: NativeStackNavigationProp<ParamListBase, 'ClientsScreen'>;
+  route: RouteProp<SomeScreensProps, 'ClientsScreen'>;
 }): ReactElement {
   const [clientNameToSearch, setClientNameToSearch] = useState('');
-  const [clientsList, setClientsList] = useState([
-    {
-      name: 'Um cliente aleatório 1',
-      cpf: '12345678901',
-      email: 'email@temporario.com',
-      valorDividas: 12.0,
-    },
-    {
-      name: 'Um cliente aleatório 2',
-      cpf: '10987654321',
-      email: 'email@temporario.com.br',
-      valorDividas: 300.0,
-    },
-    {
-      name: 'Um cliente aleatório 3',
-      cpf: '00000000000',
-      email: 'email@temp.com',
-      valorDividas: 300.0,
-    },
-  ]);
+  const [clientsList, setClientsList] = useState([]);
+
+  function fillClientsList() {
+    const clients: any = route.params.clients.map(client => {
+      client.valorDividas = route.params.debts
+        .filter(
+          debt =>
+            debt.cliente.cpf === client.cpf &&
+            debt.cliente.nome === client.nome,
+        )
+        .reduce(
+          (initialValue, currentValue) => initialValue + currentValue.valor,
+          0,
+        );
+      return client;
+    });
+    setClientsList(clients);
+  }
+
+  useEffect(() => {
+    fillClientsList();
+  }, []);
 
   function navigateToAddClientScreen() {
     navigation.navigate('AddClientScreen');
   }
 
   const clientsToShow = () =>
-    clientsList.filter(client =>
-      clientNameToSearch.length > 0 && clientNameToSearch !== ''
-        ? client.name.toLowerCase().includes(clientNameToSearch.toLowerCase())
-        : true,
-    );
+    clientsList
+      .filter(client =>
+        clientNameToSearch.length > 0 && clientNameToSearch !== ''
+          ? client.nome.toLowerCase().includes(clientNameToSearch.toLowerCase())
+          : true,
+      )
+      .sort((a, b) =>
+        a.valorDividas > b.valorDividas
+          ? -1
+          : a.valorDividas < b.valorDividas
+          ? 1
+          : 0,
+      );
 
   return (
     <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-7">
@@ -78,51 +93,10 @@ export default function ClientsScreen({
           />
         </View>
         {clientsToShow().map(client => (
-          <View
-            key={client.cpf}
-            className="mt-7 w-[90%] rounded-[8px] bg-[#FFFFFF] py-4">
-            <Text
-              className="pl-4 font-['OpenSans-Bold'] text-[#AFDA51]"
-              style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-              {client.name}
-            </Text>
-            <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-              <Text
-                className="font-['OpenSans-Bold'] text-[#404040]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                CPF:
-              </Text>
-              <Text
-                className="font-['OpenSans-Regular'] text-[#404040]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                {client.cpf}
-              </Text>
-            </View>
-            <View className="mt-3 flex w-[95%] flex-row gap-x-2 pl-4">
-              <Text
-                className="font-['OpenSans-Bold'] text-[#404040]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                E-mail:
-              </Text>
-              <Text
-                className="font-['OpenSans-Regular'] text-[#404040]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                {client.email}
-              </Text>
-            </View>
-            <View className="mt-3 flex w-[95%] flex-row justify-between pl-4">
-              <Text
-                className="font-['OpenSans-Bold'] text-[#AFDA51]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-                Valor total:
-              </Text>
-              <Text
-                className="font-['OpenSans-Bold'] text-[#404040]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-                R$ {client.valorDividas.toFixed(2).replace('.', ',')}
-              </Text>
-            </View>
-          </View>
+          <ClientCard
+            key={client.nome + '_' + client.cpf + '_' + client.criadoEm}
+            client={client}
+          />
         ))}
       </ScrollView>
       <TouchableOpacity

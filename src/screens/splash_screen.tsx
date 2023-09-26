@@ -3,6 +3,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {ReactElement, useEffect} from 'react';
 import {Image, View, useWindowDimensions} from 'react-native';
 
+import {Api} from '../api/api';
+
 import {SizeConfig} from '../config/size_config';
 
 const icon = require('../../assets/images/icon.png');
@@ -19,21 +21,32 @@ export default function SplashScreen({
     ? new SizeConfig(height, width)
     : new SizeConfig(width, height);
 
-  async function loadApplication() {
+  async function loadInfosFromApi() {
+    const clients: any = await Api.getAllClients();
+    const debts: any = await Api.getAllDebts();
+
+    loadApplication(clients.d.results, debts.d.results);
+  }
+
+  function loadApplication(clients: any, debts: any) {
     setTimeout(() => {
       navigation.reset({
         index: 0,
         routes: [
           {
             name: 'AppTabsScreen',
+            params: {
+              clients,
+              debts,
+            },
           },
         ],
       });
-    }, 4000);
+    }, 1000);
   }
 
   useEffect(() => {
-    loadApplication();
+    loadInfosFromApi();
   }, []);
 
   return (

@@ -1,10 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {RouteProp} from '@react-navigation/native';
 import React, {ReactElement} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import AddClientScreen from '../screens/add_client_screen';
 import ClientsScreen from '../screens/clients_screen';
 import HomeScreen from '../screens/home_screen';
+import {SomeScreensProps} from '../../App';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,11 +30,18 @@ const screenOptions = {
   },
 };
 
-export default function Tabs(): ReactElement {
+export default function Tabs({
+  route,
+}: {
+  route: RouteProp<SomeScreensProps, 'HomeScreen' | 'ClientsScreen'>;
+}): ReactElement {
   return (
     <Tab.Navigator sceneContainerStyle={containerStyle}>
       <Tab.Screen
         name="HomeScreen"
+        initialParams={{
+          debts: route.params.debts,
+        }}
         component={HomeScreen}
         options={{
           ...screenOptions,
@@ -47,6 +56,10 @@ export default function Tabs(): ReactElement {
       />
       <Tab.Screen
         name="ClientsScreen"
+        initialParams={{
+          clients: route.params.clients,
+          debts: route.params.debts,
+        }}
         component={ClientsScreen}
         options={{
           ...screenOptions,
