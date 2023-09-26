@@ -31,15 +31,8 @@ export type ClientInfos = {
 };
 
 export type SomeScreensProps = {
-  HomeScreen: {
-    debts: Array<ApiDebtsType>;
-  };
   ClientScreen: {
     client: ApiClientsType;
-  };
-  ClientsScreen: {
-    clients: Array<ApiClientsType>;
-    debts: Array<ApiDebtsType>;
   };
   AddClientScreen: {
     cpf?: string;

@@ -1,4 +1,4 @@
-import {ParamListBase, RouteProp} from '@react-navigation/native';
+import {ParamListBase} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {ReactElement, useEffect, useState} from 'react';
 import {
@@ -11,25 +11,26 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {SomeScreensProps} from '../../App';
-
+import {Api} from '../api/api';
 import {SizeConfig} from '../config/size_config';
 import ClientCard from '../components/client_card';
+import ClientLoadingCard from '../components/client_loading_card';
 
 export default function ClientsScreen({
   navigation,
-  route,
 }: {
   navigation: NativeStackNavigationProp<ParamListBase, 'ClientsScreen'>;
-  route: RouteProp<SomeScreensProps, 'ClientsScreen'>;
 }): ReactElement {
   const [clientNameToSearch, setClientNameToSearch] = useState('');
-  const [clientsList, setClientsList] = useState([]);
+  const [clientsList, setClientsList] = useState<any>(null);
 
-  function fillClientsList() {
-    const clients: any = route.params.clients.map(client => {
-      client.dividas = route.params.debts.filter(
-        debt =>
+  async function fillClientsList() {
+    const clientsResult: any = await Api.getAllClients();
+    const debtsResult: any = await Api.getAllDebts();
+
+    const clients: any = clientsResult.d.results.map((client: any) => {
+      client.dividas = debtsResult.d.results.filter(
+        (debt: any) =>
           debt.cliente.cpf === client.cpf && debt.cliente.nome === client.nome,
       );
       return client;
@@ -47,27 +48,31 @@ export default function ClientsScreen({
 
   const clientsToShow = () =>
     clientsList
-      .filter(client =>
+      .filter((client: any) =>
         clientNameToSearch.length > 0 && clientNameToSearch !== ''
           ? client.nome.toLowerCase().includes(clientNameToSearch.toLowerCase())
           : true,
       )
-      .sort((a, b) =>
+      .sort((a: any, b: any) =>
         a.dividas.reduce(
-          (initialValue, currentValue) => initialValue + currentValue.valor,
+          (initialValue: any, currentValue: any) =>
+            initialValue + currentValue.valor,
           0,
         ) >
         b.dividas.reduce(
-          (initialValue, currentValue) => initialValue + currentValue.valor,
+          (initialValue: any, currentValue: any) =>
+            initialValue + currentValue.valor,
           0,
         )
           ? -1
           : a.dividas.reduce(
-              (initialValue, currentValue) => initialValue + currentValue.valor,
+              (initialValue: any, currentValue: any) =>
+                initialValue + currentValue.valor,
               0,
             ) <
             b.dividas.reduce(
-              (initialValue, currentValue) => initialValue + currentValue.valor,
+              (initialValue: any, currentValue: any) =>
+                initialValue + currentValue.valor,
               0,
             )
           ? 1
@@ -100,9 +105,23 @@ export default function ClientsScreen({
             color="#A4A6AC"
           />
         </View>
-        {clientsToShow().map(client => (
-          <ClientCard key={client.id} client={client} navigation={navigation} />
-        ))}
+        {clientsList ? (
+          clientsToShow().map((client: any) => (
+            <ClientCard
+              key={client.id}
+              client={client}
+              navigation={navigation}
+            />
+          ))
+        ) : (
+          <>
+            <ClientLoadingCard />
+            <ClientLoadingCard />
+            <ClientLoadingCard />
+            <ClientLoadingCard />
+            <ClientLoadingCard />
+          </>
+        )}
       </ScrollView>
       <TouchableOpacity
         className="absolute bottom-7 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
