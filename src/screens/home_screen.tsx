@@ -1,5 +1,6 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {ScrollView, Text} from 'react-native';
+import {EventRegister} from 'react-native-event-listeners';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {Api} from '../api/api';
@@ -14,6 +15,12 @@ export default function HomeScreen(): ReactElement {
     const response: any = await Api.getAllDebts();
     setDebts(response.d.results);
   }
+
+  EventRegister.addEventListener('updateInfos', async data => {
+    if (data.canUpdate) {
+      await getDebts();
+    }
+  });
 
   useEffect(() => {
     getDebts();

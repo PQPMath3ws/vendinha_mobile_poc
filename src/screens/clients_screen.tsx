@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {EventRegister} from 'react-native-event-listeners';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -37,10 +38,6 @@ export default function ClientsScreen({
     });
     setClientsList(clients);
   }
-
-  useEffect(() => {
-    fillClientsList();
-  }, []);
 
   function navigateToAddClientScreen() {
     navigation.navigate('AddClientScreen');
@@ -78,6 +75,16 @@ export default function ClientsScreen({
           ? 1
           : 0,
       );
+
+  EventRegister.addEventListener('updateInfos', async data => {
+    if (data.canUpdate) {
+      await fillClientsList();
+    }
+  });
+
+  useEffect(() => {
+    fillClientsList();
+  }, []);
 
   return (
     <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-7">
