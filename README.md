@@ -1,79 +1,98 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Vendinha Online - Um projeto React Native
 
-# Getting Started
+Olá. Esse repositório contém uma PoC (Proof of Concepts) acerca do dominio de desenvolvimento de uma aplicação mobile usando os seguintes requisitos:
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+- Framework: **React Native**
+- Linguagem: **JavaScript/Typescript**
+- **Clean Code**
 
-## Step 1: Start the Metro Server
+Para a realização e conclusão desse projeto, foram necessárias o uso de algumas bibliotecas, que serão citadas abaixo:
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Dependências do Projeto
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- **@react-navigation/bottom-tabs** - Adiciona o suporte a navegação por tabs/guias dentro do aplicativo.
+- **@react-navigation/native** - Adiciona o suporte a navegação entre layouts/telas dentro do aplicativo.
+- **@react-navigation/native-stack** - Adiciona o elemento de stack, que permite a navegação entre layouts/telas dentro do aplicativo.
+- **gerador-validador-cpf** - Responsável por fazer a validação de CPF dentro da aplicação.
+- **nativewind** - Biblioteca de estilização para React Native que usa o Tailwind CSS para estilização no mobile.
+- **react** - Framework JavaScript/TypeScript que permite o desenvolvimento de uma SPA.
+- **react-native** - Biblioteca responsável por distribuir os elementos para desenvolvimento da aplicação mobile em JavaScript/TypeScript.
+- **react-native-date-picker** - Responsável por fornecer um elemento para seleção de data  ou data e hora para a aplicação (tanto em android, quanto em ios), de forma nativa.
+- **react-native-event-listeners** - Responsável por fazer o gerenciamento e emissão de eventos/mensagens/sinais dentro da aplicação.
+- **react-native-fade-loading** - Responsável por gerar animações de um elemento customizável dentro do aplicativo.
+- **react-native-safe-area-context** - Responsável por fornecer um elemento React/React Native que exiba elementos dentro da "área segura" do dispositivo.
+- **react-native-screens** - Responsável por gerenciar múltiplas telas (em múltiplas views) dentro da aplicação.
+- **react-native-vector-icons** - Responsável por fornecer ícones de bibliotecas populares para uso dentro da aplicação.
 
-```bash
-# using npm
-npm start
+## Dependências de Desenvolvimento do Projeto
 
-# OR using Yarn
-yarn start
+- **@babel/core** - Núcleo do compilador JavaScript usado no projeto React Native.
+- **@babel/preset-env** - Bibiloteca que permite padronizar o ambiente de desenvolvimento para o babel.
+- **@babel/runtime** - Biblioteca que auxilia no monitoramento do fluxo da aplicação compilada com o babel.
+- **@react-native/eslint-config** - Plugin do eslint que adiciona o suporte e entendimento de propriedades e elementos usados no React Native.
+- **@react-native/metro-config** - Ferramenta que permite a compilação da aplicação para a plataforma mobile (android e/ou ios).
+- **@tsconfig/react-native** - Biblioteca que permite a configuração do typescript no projeto.
+- **@types/react** - Biblioteca que trás o retorno esperado de todos os componentes da biblioteca react.
+- **@types/react-native-vector-icons** - Biblioteca que trás o retorno esperado de todos os componentes da biblioteca de ícones do react do projeto.
+- **@types/react-test-renderer** - Biblioteca que trás o retorno esperado de todos os componentes da biblioteca de teste de render do react.
+- **@typescript-eslint/parser** - Plugin do eslint que permite a formatação/ajustes do código typescript.
+- **babel-jest** - Biblioteca de testes Jest do compilador Babel
+- **eslint** - Biblioteca que auxilia na padronização de código dentro do projeto.
+- **eslint-plugin-prettier** - Plugin do eslint que evita o conflito e realiza a comunicação entre o eslint e o prettier.
+- **eslint-plugin-tailwindcss** - Plugin do eslint que adiciona o suporte e entendimento de propriedades, elementos e classes usados no NativeWind e Tailwind CSS.
+- **jest** - Biblioteca de testes automatizados de comportamentos esperados da aplicação.
+- **metro-react-native-babel-preset** - Biblioteca que adiciona padrões e comportamentos do Metro ao compilador Babel e permite trabalhar em conjunto.
+- **prettier** - Formatador e padronizador de código.
+- **prettier-plugin-tailwindcss** - Plugin do prettier que adiciona o suporte e entendimento de propriedades, elementos e classes usados no NativeWind e Tailwind CSS.
+- **react-test-renderer** - Biblioteca que adiciona métodos extras para renderização de elementos dentro do React Native
+- **tailwindcss** - Biblioteca de estilização de elementos web.
+- **typescript** - Biblioteca que adiciona o suporte ao typescript ao projeto, que é a linguagem JavaScript, com tipagem dos objetos.
+
+<hr></hr>
+
+# Execução do Projeto
+
+Para testar e desfrutar do projeto, você tem 2 alternativas:
+
+- Clonar o projeto e configurar em sua máquina
+- Instalar o aplicativo em um emulador/dispositivo android.
+
+## Instalando em um dispositivo android
+
+- Faça o download de qualquer uma das versões postadas [**aqui**](https://github.com/PQPMath3ws/vendinha_mobile_poc/releases/tag/release) (versão assinada x versão não assinada).
+
+- Instale no dispositivo de preferência
+
+- Abra a aplicação, após instalada!
+
+## Clonando o projeto
+
+Abra um terminal/console no seu sistema operacional e insira o comando:
+
+```
+git clone https://github.com/PQPMath3ws/vendinha_mobile_poc.git
 ```
 
-## Step 2: Start your Application
+Navegue até o diretório clonado:
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```
+cd vendinha_mobile_poc/
 ```
 
-### For iOS
+Garanta de instalar as dependências do projeto primeiro, com o comando:
 
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```
+npm install
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Depois, execute o Metro do React Native, com esse comando:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```
+npm run start
+```
 
-## Step 3: Modifying your App
+Para executar no android, aperte a tecla **A**. Para executar no iOS, aperte a tecla **I**.
 
-Now that you have successfully run the app, let's modify it.
+Aguarde o aplicativo compilar e pronto!
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+OBS: Para executar no android, é necessário que esteja com o modo de depuração ativado no android (pois a instalação é realizada via ADB).
