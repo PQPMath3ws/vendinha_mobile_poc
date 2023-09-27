@@ -23,11 +23,19 @@ type ApiDebtsType = {
   descricao: string;
 };
 
+export type ClientDebt = {
+  descricao: string;
+  clienteId: number;
+  dataPagamento: string | null;
+  valor: number;
+};
+
 export type ClientInfos = {
   cpf: string;
-  dateOfBirth: Date | null;
+  dataNascimento: Date | null;
   email: string;
-  name: string;
+  nome: string;
+  dividas: Array<ClientDebt>;
 };
 
 export type SomeScreensProps = {
@@ -35,12 +43,12 @@ export type SomeScreensProps = {
     client: ApiClientsType;
   };
   AddClientScreen: {
-    cpf?: string;
-    dateOfBirth?: number;
-    email?: string;
-    name?: string;
+    debt: ClientDebt;
   };
-  CreateDebtScreen: undefined;
+  CreateDebtScreen: {
+    client?: ApiClientsType;
+    prevScreenRoute: string;
+  };
   AllClientDebtsScreen: {
     debts: Array<ApiDebtsType>;
   };

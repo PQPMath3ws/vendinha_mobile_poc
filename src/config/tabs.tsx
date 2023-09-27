@@ -7,6 +7,7 @@ import AllClientDebtsScreen from '../screens/all_client_debt_screen';
 import AddClientScreen from '../screens/add_client_screen';
 import ClientScreen from '../screens/client_screen';
 import ClientsScreen from '../screens/clients_screen';
+import CreateDebtScreen from '../screens/create_debt_screen';
 import HomeScreen from '../screens/home_screen';
 
 import AlertModal from '../components/alert_modal';
@@ -102,6 +103,14 @@ export default function Tabs(): ReactElement {
         <Tab.Screen
           name="AddClientScreen"
           component={AddClientScreen}
+          options={{
+            ...screenOptions,
+            tabBarButton: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="CreateDebtScreen"
+          component={CreateDebtScreen}
           options={{
             ...screenOptions,
             tabBarButton: () => null,

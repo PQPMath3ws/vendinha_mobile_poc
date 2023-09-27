@@ -131,7 +131,7 @@ export default function ClientsScreen({
         )}
       </ScrollView>
       <TouchableOpacity
-        className="absolute bottom-7 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
+        className="absolute bottom-32 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
         onPress={navigateToAddClientScreen}>
         <Icon className="absolute mr-4" name="add" size={30} color="#FFFFFF" />
       </TouchableOpacity>

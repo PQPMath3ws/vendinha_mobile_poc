@@ -37,12 +37,19 @@ export default function ClientScreen({
 
   function navigateToCreateDebtScreen() {
     navigation.navigate('CreateDebtScreen', {
-      cpf: route.params.client.cpf,
-      dateOfBirth: route.params.client.dataNascimento
-        ? new Date(route.params.client.dataNascimento).getTime()
-        : new Date().getTime(),
-      email: route.params.client.email,
-      name: route.params.client.nome,
+      client: {
+        id: route.params.client.id,
+        ultimaAlteracao: route.params.client.ultimaAlteracao,
+        criadoEm: route.params.client.criadoEm,
+        nome: route.params.client.nome,
+        email: route.params.client.email,
+        cpf: route.params.client.cpf,
+        dataNascimento: route.params.client.dataNascimento
+          ? new Date(route.params.client.dataNascimento).getTime()
+          : new Date().getTime(),
+        dividas: route.params.client.dividas,
+      },
+      prevScreenRoute: 'ClientScreen',
     });
   }
 
@@ -162,7 +169,7 @@ export default function ClientScreen({
           debt.dataPagamento === null || debt.dataPagamento === undefined,
       ).length === 0 && (
         <TouchableOpacity
-          className="absolute bottom-7 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
+          className="absolute bottom-32 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
           onPress={navigateToCreateDebtScreen}>
           <Icon
             className="absolute mr-4"

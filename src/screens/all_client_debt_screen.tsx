@@ -6,11 +6,9 @@ import {EventRegister} from 'react-native-event-listeners';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {SomeScreensProps} from '../../App';
-
 import DebtCard from '../components/debt_card';
-
 import {SizeConfig} from '../config/size_config';
+import {SomeScreensProps} from '../../App';
 
 export default function AllClientDebtsScreen({
   navigation,

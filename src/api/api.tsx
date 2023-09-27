@@ -1,3 +1,5 @@
+import {ClientDebt, ClientInfos} from "../../App";
+
 export class Api {
   private static baseUrl: string =
     'https://modeloproxyapi.interfocus.com.br:4443';
@@ -11,13 +13,16 @@ export class Api {
       if (response.ok) {
         return await response.json();
       } else {
-        throw {
-          status: response.status,
-          message: await response.text(),
-        };
+        let res;
+        try {
+          res = await response.json();
+        } catch {
+          throw {status: response.status, message: await response.text()};
+        }
+        throw {status: response.status, message: res[0].atributo};
       }
     } catch (error: any) {
-      return error.message;
+      return error;
     }
   }
 
@@ -40,13 +45,16 @@ export class Api {
       if (response.ok) {
         return await response.json();
       } else {
-        throw {
-          status: response.status,
-          message: await response.text(),
-        };
+        let res;
+        try {
+          res = await response.json();
+        } catch {
+          throw {status: response.status, message: await response.text()};
+        }
+        throw {status: response.status, message: res[0].atributo};
       }
     } catch (error: any) {
-      return await error.text();
+      return error;
     }
   }
 
@@ -55,6 +63,12 @@ export class Api {
 
   static getAllDebts = async (): Promise<Object> =>
     await this.makeGetRequests('/api/Divida/GetOData');
+
+  static saveClient = async (client: ClientInfos): Promise<Object> =>
+    await this.makePostOrPutRequests('/api/Cliente', 'POST', client);
+
+  static saveDebt = async (debt: ClientDebt): Promise<Object> =>
+    await this.makePostOrPutRequests('/api/Divida', 'POST', debt);
 
   static payDebt = async (debtId: number): Promise<Object> =>
     await this.makePostOrPutRequests('/api/Divida/Pagar', 'PUT', {

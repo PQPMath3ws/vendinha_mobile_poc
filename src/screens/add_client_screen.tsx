@@ -1,7 +1,8 @@
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {
+  BackHandler,
   Keyboard,
   ScrollView,
   Text,
@@ -14,30 +15,30 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {SizeConfig} from '../config/size_config';
+import DebtCard from '../components/debt_card';
+import {saveClient} from '../services/client_services';
+import {saveDebt} from '../services/debt_services';
+import {checkForEmptyFields} from '../validators/client_validators';
+import {ClientInfos, SomeScreensProps} from '../../App';
 
-type ClientInfos = {
-  cpf: string;
-  dateOfBirth: Date | null;
-  email: string;
-  name: string;
-};
-
-type ClientFields = 'cpf' | 'dateOfBirth' | 'email' | 'name';
+type ClientFields = 'cpf' | 'dataNascimento' | 'email' | 'nome' | 'dividas';
 
 export default function AddClientScreen({
   navigation,
+  route,
 }: {
   navigation: NativeStackNavigationProp<ParamListBase, 'AddClientScreen'>;
+  route: RouteProp<SomeScreensProps, 'AddClientScreen'>;
 }): ReactElement {
   const [clientInfos, setClientInfos] = useState<ClientInfos>({
     cpf: '',
-    dateOfBirth: null,
+    dataNascimento: null,
     email: '',
-    name: '',
+    nome: '',
+    dividas: [],
   });
   const [canOpenTheModal, setCanOpenTheModal] = useState<boolean>(false);
   const [canSaveTheClient, setCanSaveTheClient] = useState<boolean>(false);
-  const [clientDebts, setClientDebts] = useState([]);
 
   function navigateBackToClientsScreen(): void {
     navigation.reset({
@@ -50,69 +51,79 @@ export default function AddClientScreen({
     });
   }
 
-  function validateAllFields(infos: ClientInfos): boolean {
-    if (
-      infos.name === null ||
-      infos.name === undefined ||
-      infos.name === '' ||
-      infos.name.length < 6
-    ) {
-      return false;
-    }
-    if (
-      infos.cpf === null ||
-      infos.cpf === undefined ||
-      infos.cpf.length !== 11
-    ) {
-      return false;
-    }
-    if (
-      infos.dateOfBirth === null ||
-      infos.dateOfBirth === undefined ||
-      infos.dateOfBirth >= new Date()
-    ) {
-      return false;
-    }
-    if (
-      infos.email === null ||
-      infos.email === undefined ||
-      infos.email.length < 12 ||
-      infos.email === '' ||
-      !/^\w+([\.-]?\w+)*.{2,}@\w+([\.-]?\w+)*.{1,}(\.\w{2,3})+$/.test(
-        infos.email,
-      )
-    ) {
-      return false;
-    }
-    if (clientDebts.length === 0) {
-      return false;
-    }
-    return true;
+  function navigateToCreateDebtScreen() {
+    navigation.navigate('CreateDebtScreen', {
+      client: {
+        cpf: clientInfos.cpf,
+        dataNascimento: clientInfos.dataNascimento
+          ? clientInfos.dataNascimento.getTime()
+          : new Date().getTime(),
+        email: clientInfos.email,
+        nome: clientInfos.nome,
+      },
+      prevScreenRoute: 'AddClientScreen',
+    });
   }
 
-  function verifyAndSetClientInfos(name: ClientFields, value: string | Date) {
-    let canSaveInfos = true;
-    if (name === 'cpf') {
-      if (
-        typeof value === 'string' &&
-        value.length > 11 &&
-        value !== clientInfos.cpf
-      ) {
-        canSaveInfos = false;
-      }
-    }
-    if (canSaveInfos) {
-      setClientInfos({
-        ...clientInfos,
-        [`${name}`]: value,
-      });
-    }
-    const infosToCheck = {
+  function getAndSetClientInfos(name: ClientFields, value: string | Date) {
+    const infos = {
       ...clientInfos,
       [`${name}`]: value,
     };
-    setCanSaveTheClient(validateAllFields(infosToCheck));
+    setClientInfos(infos);
+    setCanSaveTheClient(checkForEmptyFields(infos));
   }
+
+  async function tryToSaveClient() {
+    Keyboard.dismiss();
+
+    const client: number | null = await saveClient(clientInfos);
+
+    if (client) {
+      if (clientInfos.dividas.length > 0) {
+        const orderedDebtsArray = clientInfos.dividas.sort((a, b) =>
+          (a.dataPagamento === null || a.dataPagamento === undefined) &&
+          b.dataPagamento !== null &&
+          b.dataPagamento !== undefined
+            ? 1
+            : a.dataPagamento !== null && a.dataPagamento !== undefined
+            ? -1
+            : 0,
+        );
+        orderedDebtsArray.forEach(async debt => {
+          debt.clienteId = client;
+          await saveDebt(debt);
+        });
+        navigateBackToClientsScreen();
+      }
+      navigateBackToClientsScreen();
+    }
+  }
+
+  useEffect(() => {
+    if (route.params) {
+      let debts = clientInfos.dividas;
+      if (route.params.debt) {
+        debts.push(route.params.debt);
+      }
+      setClientInfos(prev => ({
+        ...prev,
+        dividas: debts,
+      }));
+    }
+
+    const backPressedAction = () => {
+      navigateBackToClientsScreen();
+      return true;
+    };
+
+    const backPressedHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backPressedAction,
+    );
+
+    return () => backPressedHandler.remove();
+  }, [route.params]);
 
   return (
     <SafeAreaView className="relative h-full w-full bg-[#FAFAFA] pb-[100px]">
@@ -142,9 +153,9 @@ export default function AddClientScreen({
           </Text>
           <TextInput
             className="mt-2 h-[40px] rounded-[8px] border-[1px] border-solid border-[#E8E8E8] pl-3 font-['OpenSans-Regular'] text-[#707070]"
-            value={clientInfos.name}
+            value={clientInfos.nome}
             inputMode="text"
-            onChangeText={name => verifyAndSetClientInfos('name', name)}
+            onChangeText={nome => getAndSetClientInfos('nome', nome)}
             style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}
           />
           <View className="flex flex-row">
@@ -158,7 +169,7 @@ export default function AddClientScreen({
                 className="mt-2 h-[40px] w-[90%] rounded-[8px] border-[1px] border-solid border-[#E8E8E8] pl-3 font-['OpenSans-Regular'] text-[#707070]"
                 value={clientInfos.cpf}
                 inputMode="numeric"
-                onChangeText={cpf => verifyAndSetClientInfos('cpf', cpf)}
+                onChangeText={cpf => getAndSetClientInfos('cpf', cpf)}
                 style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}
               />
             </View>
@@ -175,8 +186,8 @@ export default function AddClientScreen({
                   Keyboard.dismiss();
                 }}
                 value={
-                  clientInfos.dateOfBirth
-                    ? clientInfos.dateOfBirth.toLocaleDateString()
+                  clientInfos.dataNascimento
+                    ? clientInfos.dataNascimento.toLocaleDateString()
                     : ''
                 }
                 style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}
@@ -193,7 +204,7 @@ export default function AddClientScreen({
             value={clientInfos.email}
             autoComplete="off"
             inputMode="email"
-            onChangeText={email => verifyAndSetClientInfos('email', email)}
+            onChangeText={email => getAndSetClientInfos('email', email)}
             style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}
           />
           <Text
@@ -201,35 +212,13 @@ export default function AddClientScreen({
             style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
             Dívidas
           </Text>
-          {clientDebts && clientDebts.length > 0 ? (
-            <View className="relative mt-7 w-full rounded-[8px] bg-[#FFFFFF] py-4">
-              <Text
-                className="ml-4 mt-1 font-['OpenSans-Bold'] text-[#AFDA51]"
-                style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2.4)}}>
-                Dívida 1
-              </Text>
-              <TouchableOpacity className="absolute right-5 top-4 rounded-[10px] bg-[#CE2929] px-3 py-2">
-                <Text
-                  className="font-['OpenSans-Bold'] text-white"
-                  style={{
-                    fontSize: Math.floor(SizeConfig.textMultiplier * 2),
-                  }}>
-                  Pagar
-                </Text>
-              </TouchableOpacity>
-              <View className="mt-7 flex w-[95%] flex-row justify-between pl-4">
-                <Text
-                  className="font-['OpenSans-Bold'] text-[#404040]"
-                  style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                  Valor da dívida:
-                </Text>
-                <Text
-                  className="font-['OpenSans-Bold'] text-[#707070]"
-                  style={{fontSize: Math.floor(SizeConfig.textMultiplier * 2)}}>
-                  R$ 250,00
-                </Text>
-              </View>
-            </View>
+          {clientInfos.dividas && clientInfos.dividas.length > 0 ? (
+            clientInfos.dividas.map(divida => (
+              <DebtCard
+                key={divida.descricao + '_' + divida.valor}
+                debt={divida}
+              />
+            ))
           ) : (
             <View className="mt-20 items-center">
               <Text
@@ -254,6 +243,7 @@ export default function AddClientScreen({
           className={`ml-5 rounded-[10px] ${
             canSaveTheClient ? 'bg-[#62A856]' : 'bg-[#E8E8E8]'
           } px-3 py-2`}
+          onPress={tryToSaveClient}
           disabled={!canSaveTheClient}>
           <Text
             className="font-['OpenSans-Bold'] text-white"
@@ -262,16 +252,31 @@ export default function AddClientScreen({
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity className="absolute bottom-7 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]">
-        <Icon className="absolute mr-4" name="add" size={30} color="#FFFFFF" />
-      </TouchableOpacity>
+      {clientInfos.dividas &&
+        clientInfos.dividas.filter(
+          divida =>
+            divida.dataPagamento === null || divida.dataPagamento === undefined,
+        ).length === 0 && (
+          <TouchableOpacity
+            className="absolute bottom-32 right-7 h-[60px] w-[60px] items-center justify-center rounded-[30px] bg-[#62A856]"
+            onPress={navigateToCreateDebtScreen}>
+            <Icon
+              className="absolute mr-4"
+              name="add"
+              size={30}
+              color="#FFFFFF"
+            />
+          </TouchableOpacity>
+        )}
       <DatePicker
         modal
         open={canOpenTheModal}
         mode="date"
-        date={clientInfos.dateOfBirth ? clientInfos.dateOfBirth : new Date()}
+        date={
+          clientInfos.dataNascimento ? clientInfos.dataNascimento : new Date()
+        }
         onConfirm={date => {
-          verifyAndSetClientInfos('dateOfBirth', date);
+          getAndSetClientInfos('dataNascimento', date);
           setCanOpenTheModal(false);
         }}
         onCancel={() => {

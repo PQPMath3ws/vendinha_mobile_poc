@@ -15,25 +15,34 @@ export default function PayDebtAlertModal({
   dividaId: number;
 }): ReactElement {
   async function payUserDebt() {
-    const result: any = await Api.payDebt(dividaId);
-    setVisible(false);
-    if (result.status && result.message) {
-      EventRegister.emit('canShowTheAlertModal', {
-        canShowAlertModal: true,
-        alertModalIsSuccess: false,
-        alertModalMessage: result.message,
+    if (dividaId) {
+      const result: any = await Api.payDebt(dividaId);
+      setVisible(false);
+      if (result.status && result.message) {
+        EventRegister.emit('canShowTheAlertModal', {
+          canShowAlertModal: true,
+          alertModalIsSuccess: false,
+          alertModalMessage: result.message,
+        });
+      } else {
+        EventRegister.emit('canShowTheAlertModal', {
+          canShowAlertModal: true,
+          alertModalIsSuccess: true,
+          alertModalMessage: 'A dívida do cliente foi paga com sucesso!',
+        });
+      }
+
+      EventRegister.emit('updateInfos', {
+        canUpdate: true,
       });
     } else {
       EventRegister.emit('canShowTheAlertModal', {
         canShowAlertModal: true,
-        alertModalIsSuccess: true,
-        alertModalMessage: 'A dívida do cliente foi paga com sucesso',
+        alertModalIsSuccess: false,
+        alertModalMessage:
+          'Salve o cliente antes de atualizar o estado de sua dívida!',
       });
     }
-
-    EventRegister.emit('updateInfos', {
-      canUpdate: true,
-    });
   }
 
   return (
