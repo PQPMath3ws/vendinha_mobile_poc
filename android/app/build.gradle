@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.vendinha_mobile_poc"
+    namespace "com.nerdtech.vendinha_mobile_poc"
     defaultConfig {
-        applicationId "com.vendinha_mobile_poc"
+        applicationId "com.nerdtech.vendinha_mobile_poc"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

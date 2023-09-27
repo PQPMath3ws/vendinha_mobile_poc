@@ -4,7 +4,7 @@
  * <p>This source code is licensed under the MIT license found in the LICENSE file in the root
  * directory of this source tree.
  */
-package com.vendinha_mobile_poc;
+package com.nerdtech.vendinha_mobile_poc;
 
 import android.content.Context;
 import com.facebook.react.ReactInstanceManager;

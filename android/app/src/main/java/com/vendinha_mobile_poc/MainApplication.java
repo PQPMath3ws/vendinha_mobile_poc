@@ -1,4 +1,4 @@
-package com.vendinha_mobile_poc;
+package com.nerdtech.vendinha_mobile_poc;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
